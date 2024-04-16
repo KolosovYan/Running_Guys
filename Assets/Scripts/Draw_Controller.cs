@@ -12,6 +12,7 @@ public class Draw_Controller : MonoBehaviour
     [SerializeField] private SplineComputer splineComputer;
     [SerializeField] private MeshRenderer splineRenderer;
     [SerializeField] private SplineRenderer splRenderer;
+    [SerializeField] private Image drawingField;
 
     [Header("Settings")]
 
@@ -84,12 +85,17 @@ public class Draw_Controller : MonoBehaviour
         screenPosDepth.z = 5;
         Vector3 position = new Vector3();
 
+        float width = Screen.width;
+        float height = Screen.height;
+
         int xOldMin = -2;
         int xOldMax = 2;
-        int newMin = 165;
-        int newMax = 915;
-        int newMinY = 30;
-        int newMaxY = 530;
+        float newMin = (width - drawingField.rectTransform.rect.width) / 2;
+        float newMax = newMin + drawingField.rectTransform.rect.width;
+        float newMinY = drawingField.rectTransform.anchoredPosition.y - (drawingField.rectTransform.rect.height / 2);
+        float newMaxY = newMinY + drawingField.rectTransform.rect.height;
+
+        Debug.Log(newMax);
 
         position.x = (screenPosDepth.x - newMin) * (xOldMax - xOldMin) / (newMax - newMin) + xOldMin;
         position.y = (screenPosDepth.y - newMinY) * (xOldMax - xOldMin) / (newMaxY - newMinY) + xOldMin;
